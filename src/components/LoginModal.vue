@@ -1,6 +1,7 @@
 <template>
     <div class="login-modal">
         <h1>Everlastia Online</h1>
+        <p>Enter your username and password to begin</p>
         <LoginForm />
     </div>
 </template>
@@ -16,13 +17,14 @@ export default {
 }
 </script>
 
-<style scoped>
-    .login-modal {
-        width: 100%;
-        max-width: 400px;
-        height: auto;
-        background: rgba(249,249,238, 0.9);
-        border: 2px solid #C77566;
-        border-radius: 5px;
-    }
+<style scoped lang="scss">
+.login-modal {
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    background: rgba(249,249,238, 0.9);
+    border: 10px groove #C77566;
+    border-radius: 10px;
+    padding: 1em;
+}
 </style>

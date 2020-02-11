@@ -1,4 +1,4 @@
-# skies-of-everlastia
+# Skies of Everlastia Login Page
 
 ## Project setup
 ```

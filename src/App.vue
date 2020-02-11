@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <LoginModal />
+    <div class="version-number">v1.0.5</div>
   </div>
 </template>
 
@@ -16,7 +17,7 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Girassol&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Girassol|Roboto&display=swap');
 
 body, html {
   height: 100%;
@@ -37,9 +38,21 @@ body, html {
   color: #2c3e50;
 }
 
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
 h1 {
     font-family: 'Girassol', cursive;
     font-size: 3rem;
     letter-spacing: 2px;
+    margin: 10px 0;
+}
+
+.version-number {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  color: #fff
 }
 </style>
