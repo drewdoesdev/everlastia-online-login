@@ -1,22 +1,43 @@
 <template>
-    <form class="login-form">
+    <form class="login-form" v-on:submit.prevent="onSubmit">
         <div class="login-form__row">
             <label for="username">Username: </label>
-            <input id="username" class="login-form__field" type="text" />
+            <input 
+                id="username" 
+                class="login-form__field" 
+                type="text" 
+                value=""
+                v-model="username" />
         </div>
         <div class="login-form__row">
             <label for="password">Password: </label>
-            <input id="password" class="login-form__field" type="password" />
+            <input 
+                id="password" 
+                class="login-form__field" 
+                type="password" 
+                v-model="password" />
             <a class="login-form__forgot-password">Forgot Password?</a>
         </div>
 
-        <input class="login-form__submit" type="submit" value="SUBMIT" />
+        <input class="login-form__submit" type="submit" value="SIGN IN"/>
     </form>
 </template>
 
 <script>
+
 export default {
-    name: 'LoginForm'
+    name: 'LoginForm',
+    data() {
+        return  {
+            username: "",
+            password: ""
+        }
+    },
+    methods: {
+        onSubmit: function(){
+            alert(this.username);
+        }
+    }
 }
 </script>
 
@@ -80,7 +101,7 @@ $cta-color: #796C6D;
         padding: 0;
         border-radius: 5px;
         cursor: pointer;
-        margin: 5px 0;
+        margin: 5px 0 10px 0;
         &:hover {
             background-color: darken($cta-color, 8%);
             color: darken(#fff, 8%);

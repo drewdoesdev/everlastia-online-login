@@ -22,7 +22,7 @@ export default {
     width: 100%;
     max-width: 500px;
     height: auto;
-    background: rgba(249,249,238, 0.9);
+    background: rgba(249,249,238, 0.95);
     border: 10px groove #C77566;
     border-radius: 10px;
     padding: 1em;
