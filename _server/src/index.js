@@ -2,19 +2,23 @@ var express = require('express');
 var express_graphql = require('express-graphql');
 var { buildSchema } = require('graphql');
 
-// GraphQL schema
 var schema = buildSchema(`
-    type Query {
-        message: String
-    }
+  type Query {
+    ip: String
+  }
 `);
 
-// Root resolver
+const loggingMiddleware = (req, res, next) => {
+  console.log('ip:', req.ip);
+  next();
+}
+
 var root = {
-    message: () => 'Hello World!'
+  ip: function (args, request) {
+    return request.ip;
+  }
 };
 
-// Create an express server and a GraphQL endpoint
 var app = express();
 app.use('/graphql', express_graphql({
     schema: schema,
