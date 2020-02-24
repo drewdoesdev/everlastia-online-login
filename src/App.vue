@@ -1,24 +1,25 @@
 <template>
   <div id="app">
-    <LoginModal />
+    <router-view></router-view>
     <div class="version-number">v1.0.5</div>
   </div>
 </template>
 
 <script>
-import LoginModal from './components/LoginModal.vue'
 
 export default {
   name: 'App',
   components: {
-    LoginModal
+
   }
 }
+
 </script>
 
-<style>
+<style lang='scss'>
 @import url('https://fonts.googleapis.com/css?family=Girassol|Roboto&display=swap');
 
+/* Global Styles */
 body, html {
   height: 100%;
   margin: 0;
@@ -47,6 +48,13 @@ h1 {
     font-size: 3rem;
     letter-spacing: 2px;
     margin: 10px 0;
+}
+
+a {
+  color: #796C6D;
+  &:hover {
+      color: darken(#796C6D, 8%);
+  }
 }
 
 .version-number {

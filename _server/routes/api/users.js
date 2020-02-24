@@ -1,11 +1,6 @@
 const express = require('express');
 const mongodb = require('mongodb');
-const cors = require('cors');
-const bcrypt = require('bcrypt');
-const passport = require('passport');
 
-const initPassport = require('../../passport-config');
-initPassword(passport);
 const router = express.Router();
 
 router.get('/', async (req, res) => {
@@ -15,10 +10,9 @@ router.get('/', async (req, res) => {
 
 router.post('/', async (req, res) => {
     const users = await loadUserCollection();
-    const hashedPass = await bcrypt.hash(req.body.password, 10);
     await users.insertOne({
         username: req.body.username,
-        password: hashedPass,
+        password: req.body.password,
         email: req.body.email,
         createdAt: new Date()
     });
