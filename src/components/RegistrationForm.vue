@@ -31,7 +31,7 @@
             <input 
                 id="conf-password" 
                 class="registration-form__field" 
-                type="conf-password" 
+                type="password" 
                 v-model="confPassword" />
         </div>
 
@@ -40,8 +40,10 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
-    name: 'LoginForm',
+    name: 'RegistrationForm',
     data() {
         return  {
             email: "",
@@ -51,8 +53,18 @@ export default {
         }
     },
     methods: {
-        onSubmit: function(){
-            alert(this.username);
+        onSubmit: function(e){
+            e.preventDefault();
+            axios({
+                method: 'post',
+                url: 'http://localhost:5000/api/users/',
+                data: {
+                    username: this.username,
+                    password: this.password,
+                    email: this.email
+                }
+            })
+            .then((response => console.log(response)));
         }
     }
 }

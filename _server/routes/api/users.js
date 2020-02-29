@@ -1,22 +1,50 @@
 const express = require('express');
 const mongodb = require('mongodb');
+const dbSettings = require('../../../db.settings');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
+router.get('/:username', async (req, res) => {
     const users = await loadUserCollection();
-    res.send(await users.find({}).toArray());
+    try {
+        let user = await users.find({username: req.params.username}).toArray();
+        if(user.length > 0){
+            res.send(user);
+        }
+        else {
+            res.status(600).send("Username or Password was not found");
+        }
+    }
+    catch(e){
+        switch(e){
+            case e.code == 11000:
+                res.status(11000).send("Username already exists")
+            default:
+                res.status(101).send(e);
+        }
+    }
 });
+
 
 router.post('/', async (req, res) => {
     const users = await loadUserCollection();
-    await users.insertOne({
-        username: req.body.username,
-        password: req.body.password,
-        email: req.body.email,
-        createdAt: new Date()
-    });
-    res.status(201).send();
+    try {
+        await users.insertOne({
+            username: req.body.username,
+            password: req.body.password,
+            email: req.body.email,
+            createdAt: new Date()
+        });
+        res.status(201).send();
+    }
+    catch(e){
+        switch(e){
+            case e.code == 11000:
+                res.status(11000).send("Username already exists")
+            default:
+                res.status(101).send(e);
+        }
+    }
 })
 
 router.delete('/:id', async (req, res) => {
@@ -26,8 +54,9 @@ router.delete('/:id', async (req, res) => {
 })
 
 async function loadUserCollection() {
+    const url = dbSettings.url;
     const client = await mongodb.MongoClient.connect
-         ('mongodb+srv://the12ofSpades:0eEKFkzEPrVqySOX@cluster0-cnnhf.mongodb.net/test?retryWrites=true&w=majority', {
+         (url, {
              useNewUrlParse: true
          });
 

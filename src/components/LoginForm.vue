@@ -1,5 +1,6 @@
 <template>
     <form class="login-form" v-on:submit.prevent="onSubmit">
+        <div class="login-form__error">{{ this.errorMessage }}</div>
         <div class="login-form__row">
             <label for="username">Username: </label>
             <input 
@@ -24,18 +25,33 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
     name: 'LoginForm',
     data() {
         return  {
             username: "",
-            password: ""
+            password: "",
+            errorMessage: ""
         }
     },
     methods: {
-        onSubmit: function(){
-            alert(this.username);
+        onSubmit: function(e){
+            e.preventDefault();
+            axios({
+                method: 'get',
+                url: 'http://localhost:5000/api/users/' + this.username,
+            })
+            .then(response => {
+                console.log(response);
+                this.$router.push('/character-select')
+            })
+            .catch((error) => {
+                if(error.status === 600){
+                    this.errorMessage = error.response.data;
+                }
+            });
         }
     }
 }
@@ -51,6 +67,10 @@ $cta-color: #796C6D;
     height: auto;
     width: 65%;
     margin: 0 auto;
+    .login-form__error {
+        @include error-text();
+        margin-bottom: 10px;
+    }
     .login-form__row {
         display: flex;
         flex-flow: column nowrap;
