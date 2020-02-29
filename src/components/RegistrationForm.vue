@@ -1,26 +1,41 @@
 <template>
-    <form class="login-form" v-on:submit.prevent="onSubmit">
-        <div class="login-form__error">{{ this.errorMessage }}</div>
-        <div class="login-form__row">
+    <form class="registration-form" v-on:submit.prevent="onSubmit">
+        <div class="registration-form__row">
+            <label for="email">Email: </label>
+            <input 
+                id="email" 
+                class="registration-form__field" 
+                type="text" 
+                value=""
+                v-model="email" />
+        </div>
+        <div class="registration-form__row">
             <label for="username">Username: </label>
             <input 
                 id="username" 
-                class="login-form__field" 
+                class="registration-form__field" 
                 type="text" 
                 value=""
                 v-model="username" />
         </div>
-        <div class="login-form__row">
+        <div class="registration-form__row">
             <label for="password">Password: </label>
             <input 
                 id="password" 
-                class="login-form__field" 
+                class="registration-form__field" 
                 type="password" 
                 v-model="password" />
-            <a class="login-form__forgot-password">Forgot Password?</a>
+        </div>
+        <div class="registration-form__row">
+            <label for="conf-password">Confirm Password: </label>
+            <input 
+                id="conf-password" 
+                class="registration-form__field" 
+                type="password" 
+                v-model="confPassword" />
         </div>
 
-        <input class="login-form__submit" type="submit" value="SIGN IN"/>
+        <input class="registration-form__submit" type="submit" value="Register"/>
     </form>
 </template>
 
@@ -28,30 +43,28 @@
 import axios from 'axios';
 
 export default {
-    name: 'LoginForm',
+    name: 'RegistrationForm',
     data() {
         return  {
+            email: "",
             username: "",
             password: "",
-            errorMessage: ""
+            confPassword: ""
         }
     },
     methods: {
         onSubmit: function(e){
             e.preventDefault();
             axios({
-                method: 'get',
-                url: 'http://localhost:5000/api/users/' + this.username,
-            })
-            .then(response => {
-                console.log(response);
-                this.$router.push('/character-select')
-            })
-            .catch((error) => {
-                if(error.status === 600){
-                    this.errorMessage = error.response.data;
+                method: 'post',
+                url: 'http://localhost:5000/api/users/',
+                data: {
+                    username: this.username,
+                    password: this.password,
+                    email: this.email
                 }
-            });
+            })
+            .then((response => console.log(response)));
         }
     }
 }
@@ -60,18 +73,14 @@ export default {
 <style scoped lang="scss">
 $cta-color: #796C6D;
 
-.login-form {
+.registration-form {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
     height: auto;
     width: 65%;
     margin: 0 auto;
-    .login-form__error {
-        @include error-text();
-        margin-bottom: 10px;
-    }
-    .login-form__row {
+    .registration-form__row {
         display: flex;
         flex-flow: column nowrap;
         justify-content: space-between;
@@ -84,7 +93,7 @@ $cta-color: #796C6D;
         text-align: left;
         margin-bottom: 5px;
     }
-    .login-form__field {
+    .registration-form__field {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -99,7 +108,7 @@ $cta-color: #796C6D;
         }
     }
 
-    .login-form__forgot-password {
+    .registration-form__forgot-password {
         display: inline-block;
         font-size: 0.85rem;
         text-align: right;
@@ -112,7 +121,7 @@ $cta-color: #796C6D;
             color: darken($cta-color, 8%);
         }
     }
-    .login-form__submit {
+    .registration-form__submit {
         height: 32px;
         font-size: 15px;
         background-color: $cta-color;
@@ -121,7 +130,7 @@ $cta-color: #796C6D;
         padding: 0;
         border-radius: 5px;
         cursor: pointer;
-        margin: 5px 0 10px 0;
+        margin: 5px 0 20px 0;
         &:hover {
             background-color: darken($cta-color, 8%);
             color: darken(#fff, 8%);

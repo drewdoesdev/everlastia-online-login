@@ -3,11 +3,12 @@
         <h1>Everlastia Online</h1>
         <p>Enter your username and password to begin</p>
         <LoginForm />
+        <p>Not a member? <router-link to="/registration">Register today!</router-link></p>
     </div>
 </template>
 
 <script>
-import LoginForm from './LoginForm.vue';
+import LoginForm from '../components/LoginForm.vue';
 
 export default {
     name: 'LoginModal',
@@ -19,12 +20,6 @@ export default {
 
 <style scoped lang="scss">
 .login-modal {
-    width: 100%;
-    max-width: 500px;
-    height: auto;
-    background: rgba(249,249,238, 0.95);
-    border: 10px groove #C77566;
-    border-radius: 10px;
-    padding: 1em;
+    @include modal(500px);
 }
 </style>
